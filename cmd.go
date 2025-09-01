@@ -1,15 +1,16 @@
 package main
 
 import (
+	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 )
 
-func SetCommand(key, value string) {
+func loadContext() (*Store, string, error) {
 	configDir, err := GetConfigDir()
 	if err != nil {
-		PrintError("Cant get path to the configuration path")
-		os.Exit(1)
+		return nil, "", errors.New("cant get path to the configuration path")
 	}
 
 	storePath := filepath.Join(configDir, "data.tanadb")
@@ -17,7 +18,16 @@ func SetCommand(key, value string) {
 	store := NewStore()
 	err = LoadFromFile(storePath, store)
 	if err != nil {
-		PrintError("failed to load store from file: " + err.Error())
+		return nil, "", fmt.Errorf("failed to load store from file: %w", err)
+	}
+
+	return store, storePath, nil
+}
+
+func SetCommand(key, value string) {
+	store, path, err := loadContext()
+	if err != nil {
+		PrintError(err.Error())
 		os.Exit(1)
 	}
 
@@ -27,7 +37,7 @@ func SetCommand(key, value string) {
 		os.Exit(1)
 	}
 
-	err = SaveToFile(store, storePath)
+	err = SaveToFile(store, path)
 	if err != nil {
 		PrintError("failed to save store to a file" + err.Error())
 		os.Exit(1)

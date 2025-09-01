@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/gob"
-	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -73,7 +72,7 @@ func LoadFromFile(path string, store *Store) error {
 func (s *Store) Set(key, value string) error {
 	_, ok := s.Store[key]
 	if ok {
-		return errors.New("key already exists")
+		return fmt.Errorf("key `%s` is already exist", key)
 	}
 
 	s.Store[key] = value
@@ -83,7 +82,7 @@ func (s *Store) Set(key, value string) error {
 func (s *Store) Get(key string) (string, error) {
 	value, ok := s.Store[key]
 	if !ok {
-		return "", errors.New("key not found")
+		return "", fmt.Errorf("key `%s` is not found", key)
 	}
 	return value, nil
 }
@@ -91,7 +90,7 @@ func (s *Store) Get(key string) (string, error) {
 func (s *Store) Update(key, newValue string) error {
 	_, ok := s.Store[key]
 	if !ok {
-		return errors.New("key not found")
+		return fmt.Errorf("key `%s` is not found", key)
 	}
 
 	s.Store[key] = newValue
@@ -101,7 +100,7 @@ func (s *Store) Update(key, newValue string) error {
 func (s *Store) Delete(key string) error {
 	_, ok := s.Store[key]
 	if !ok {
-		return errors.New("key not found")
+		return fmt.Errorf("key `%s` is not found", key)
 	}
 
 	delete(s.Store, key)

@@ -28,6 +28,12 @@ func BuildCli() *cobra.Command {
 		Run:   func(cmd *cobra.Command, args []string) {},
 	}
 
+	listCmd := &cobra.Command{
+		Use:   "list",
+		Short: "Get all keys with their values.",
+		Run:   func(cmd *cobra.Command, args []string) {},
+	}
+
 	deleteCmd := &cobra.Command{
 		Use:   "delete",
 		Short: "Delete key",
@@ -40,7 +46,7 @@ func BuildCli() *cobra.Command {
 		Run:   func(cmd *cobra.Command, args []string) {},
 	}
 
-	rootCmd.AddCommand(setCmd, getCmd, deleteCmd, updateCmd)
+	rootCmd.AddCommand(setCmd, getCmd, listCmd, deleteCmd, updateCmd)
 
 	return rootCmd
 }

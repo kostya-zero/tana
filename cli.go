@@ -16,7 +16,7 @@ func BuildCli() *cobra.Command {
 	setCmd := &cobra.Command{
 		Use:   "set",
 		Short: "Add a key to the database",
-		Run:   func(cmd *cobra.Command, args []string) {},
+		Run:   SetCommand,
 	}
 
 	getCmd := &cobra.Command{

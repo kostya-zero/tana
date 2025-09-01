@@ -23,9 +23,12 @@ func BuildCli() *cobra.Command {
 	}
 
 	getCmd := &cobra.Command{
-		Use:   "get",
+		Use:   "get [key]",
 		Short: "Get the value of the key",
-		Run:   func(cmd *cobra.Command, args []string) {},
+		Args:  cobra.ExactArgs(1),
+		Run: func(cmd *cobra.Command, args []string) {
+			GetCommand(args[0])
+		},
 	}
 
 	listCmd := &cobra.Command{

@@ -43,3 +43,19 @@ func SetCommand(key, value string) {
 		os.Exit(1)
 	}
 }
+
+func GetCommand(key string) {
+	store, _, err := loadContext()
+	if err != nil {
+		PrintError(err.Error())
+		os.Exit(1)
+	}
+
+	value, err := store.Get(key)
+	if err != nil {
+		PrintError(err.Error())
+		os.Exit(1)
+	}
+
+	println(value)
+}

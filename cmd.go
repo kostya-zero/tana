@@ -59,3 +59,21 @@ func GetCommand(key string) {
 
 	println(value)
 }
+
+func ListCommand() {
+	store, _, err := loadContext()
+	if err != nil {
+		PrintError(err.Error())
+		os.Exit(1)
+	}
+
+	keys := store.GetAll()
+	if len(*keys) == 0 {
+		println("no keys found")
+		return
+	}
+
+	for k, v := range *keys {
+		fmt.Printf("%s: %s\n", k, v)
+	}
+}

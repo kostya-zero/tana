@@ -34,7 +34,9 @@ func BuildCli() *cobra.Command {
 	listCmd := &cobra.Command{
 		Use:   "list",
 		Short: "Get all keys with their values.",
-		Run:   func(cmd *cobra.Command, args []string) {},
+		Run: func(cmd *cobra.Command, args []string) {
+			ListCommand()
+		},
 	}
 
 	deleteCmd := &cobra.Command{

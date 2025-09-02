@@ -77,3 +77,23 @@ func ListCommand() {
 		fmt.Printf("%s: %s\n", k, v)
 	}
 }
+
+func DeleteCommand(key string) {
+	store, path, err := loadContext()
+	if err != nil {
+		PrintError(err.Error())
+		os.Exit(1)
+	}
+
+	err = store.Delete(key)
+	if err != nil {
+		PrintError(err.Error())
+		os.Exit(1)
+	}
+
+	err = SaveToFile(store, path)
+	if err != nil {
+		PrintError("failed to save store to a file" + err.Error())
+		os.Exit(1)
+	}
+}

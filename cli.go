@@ -40,9 +40,12 @@ func BuildCli() *cobra.Command {
 	}
 
 	deleteCmd := &cobra.Command{
-		Use:   "delete",
+		Use:   "delete [key]",
 		Short: "Delete key",
-		Run:   func(cmd *cobra.Command, args []string) {},
+		Args:  cobra.ExactArgs(1),
+		Run: func(cmd *cobra.Command, args []string) {
+			DeleteCommand(args[0])
+		},
 	}
 
 	updateCmd := &cobra.Command{

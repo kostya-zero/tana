@@ -57,7 +57,15 @@ func BuildCli() *cobra.Command {
 		},
 	}
 
-	rootCmd.AddCommand(setCmd, getCmd, listCmd, deleteCmd, updateCmd)
+	versionCmd := &cobra.Command{
+		Use:   "version",
+		Short: "Show version of Tana",
+		Run: func(cmd *cobra.Command, args []string) {
+			println(VERSION)
+		},
+	}
+
+	rootCmd.AddCommand(setCmd, getCmd, listCmd, deleteCmd, updateCmd, versionCmd)
 
 	return rootCmd
 }

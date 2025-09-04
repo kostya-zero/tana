@@ -49,9 +49,12 @@ func BuildCli() *cobra.Command {
 	}
 
 	updateCmd := &cobra.Command{
-		Use:   "update",
+		Use:   "update [key] [newValue]",
 		Short: "Update value of the key",
-		Run:   func(cmd *cobra.Command, args []string) {},
+		Args:  cobra.ExactArgs(2),
+		Run: func(cmd *cobra.Command, args []string) {
+			UpdateCommand(args[0], args[1])
+		},
 	}
 
 	rootCmd.AddCommand(setCmd, getCmd, listCmd, deleteCmd, updateCmd)

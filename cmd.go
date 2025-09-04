@@ -97,3 +97,23 @@ func DeleteCommand(key string) {
 		os.Exit(1)
 	}
 }
+
+func UpdateCommand(key, newValue string) {
+	store, path, err := loadContext()
+	if err != nil {
+		PrintError(err.Error())
+		os.Exit(1)
+	}
+
+	err = store.Update(key, newValue)
+	if err != nil {
+		PrintError(err.Error())
+		os.Exit(1)
+	}
+
+	err = SaveToFile(store, path)
+	if err != nil {
+		PrintError("failed to save store to a file" + err.Error())
+		os.Exit(1)
+	}
+}

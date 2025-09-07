@@ -24,6 +24,15 @@ func loadContext() (*Store, string, error) {
 	return store, storePath, nil
 }
 
+func saveStore(store *Store, path string) error {
+	err := SaveToFile(store, path)
+	if err != nil {
+		return fmt.Errorf("failed to save store to a file: %s", err.Error())
+	}
+
+	return nil
+}
+
 func SetCommand(key, value string) {
 	store, path, err := loadContext()
 	if err != nil {
@@ -37,9 +46,9 @@ func SetCommand(key, value string) {
 		os.Exit(1)
 	}
 
-	err = SaveToFile(store, path)
+	err = saveStore(store, path)
 	if err != nil {
-		PrintError("failed to save store to a file" + err.Error())
+		PrintError(err.Error())
 		os.Exit(1)
 	}
 }
@@ -91,9 +100,9 @@ func DeleteCommand(key string) {
 		os.Exit(1)
 	}
 
-	err = SaveToFile(store, path)
+	err = saveStore(store, path)
 	if err != nil {
-		PrintError("failed to save store to a file" + err.Error())
+		PrintError(err.Error())
 		os.Exit(1)
 	}
 }
@@ -111,9 +120,9 @@ func UpdateCommand(key, newValue string) {
 		os.Exit(1)
 	}
 
-	err = SaveToFile(store, path)
+	err = saveStore(store, path)
 	if err != nil {
-		PrintError("failed to save store to a file" + err.Error())
+		PrintError(err.Error())
 		os.Exit(1)
 	}
 }

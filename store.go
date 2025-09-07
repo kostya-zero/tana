@@ -58,9 +58,10 @@ func LoadFromFile(path string, store *Store) error {
 	decoder := gob.NewDecoder(f)
 	err = decoder.Decode(store)
 	if err != nil {
-		if err == io.EOF {
+		switch err {
+		case io.EOF:
 			return nil
-		} else if err == io.ErrUnexpectedEOF {
+		case io.ErrUnexpectedEOF:
 			return fmt.Errorf("file %s is corrupted or incomplete", path)
 		}
 		return err

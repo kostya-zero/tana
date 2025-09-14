@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 func PrintError(msg string) {
-	fmt.Printf(" \x1b[91mError\x1b[0m: %s\n", msg)
+	fmt.Fprintln(os.Stderr, " \x1b[91mError\x1b[0m:", msg)
 }

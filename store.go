@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/gob"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -29,7 +30,7 @@ func SaveToFile(store *Store, path string) error {
 	defer f.Close()
 
 	encoder := gob.NewEncoder(f)
-	err = encoder.Encode(store)
+	err = encoder.Encode(store.Store)
 	if err != nil {
 		return err
 	}
@@ -56,12 +57,13 @@ func LoadFromFile(path string, store *Store) error {
 	}
 
 	decoder := gob.NewDecoder(f)
-	err = decoder.Decode(store)
+	store.Store = make(map[string]string)
+	err = decoder.Decode(store.Store)
 	if err != nil {
-		switch err {
-		case io.EOF:
+		switch {
+		case err == io.EOF:
 			return nil
-		case io.ErrUnexpectedEOF:
+		case errors.Is(err, io.ErrUnexpectedEOF):
 			return fmt.Errorf("file %s is corrupted or incomplete", path)
 		}
 		return err

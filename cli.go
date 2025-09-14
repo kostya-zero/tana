@@ -57,6 +57,14 @@ func BuildCli() *cobra.Command {
 		},
 	}
 
+	resetCmd := &cobra.Command{
+		Use:   "reset",
+		Short: "Resets the store",
+		Run: func(cmd *cobra.Command, args []string) {
+			ResetCommand()
+		},
+	}
+
 	versionCmd := &cobra.Command{
 		Use:   "version",
 		Short: "Show version of Tana",
@@ -65,7 +73,7 @@ func BuildCli() *cobra.Command {
 		},
 	}
 
-	rootCmd.AddCommand(setCmd, getCmd, listCmd, deleteCmd, updateCmd, versionCmd)
+	rootCmd.AddCommand(setCmd, getCmd, listCmd, deleteCmd, updateCmd, versionCmd, resetCmd)
 
 	return rootCmd
 }

@@ -113,3 +113,7 @@ func (s *Store) Delete(key string) error {
 func (s *Store) GetAll() *map[string]string {
 	return &s.Store
 }
+
+func (s *Store) Reset() {
+	s.Store = make(map[string]string)
+}

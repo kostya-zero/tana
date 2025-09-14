@@ -122,3 +122,19 @@ func UpdateCommand(key, newValue string) {
 		os.Exit(1)
 	}
 }
+
+func ResetCommand() {
+	store, path, err := loadContext()
+	if err != nil {
+		PrintError(err.Error())
+		os.Exit(1)
+	}
+
+	store.Reset()
+
+	err = saveStore(store, path)
+	if err != nil {
+		PrintError(err.Error())
+		os.Exit(1)
+	}
+}

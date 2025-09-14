@@ -58,7 +58,7 @@ func LoadFromFile(path string, store *Store) error {
 
 	decoder := gob.NewDecoder(f)
 	store.Store = make(map[string]string)
-	err = decoder.Decode(store.Store)
+	err = decoder.Decode(&store.Store)
 	if err != nil {
 		switch {
 		case err == io.EOF:

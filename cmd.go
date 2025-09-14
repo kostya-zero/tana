@@ -4,23 +4,19 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"path/filepath"
 )
 
 func loadContext() (*Store, string, error) {
-	configDir, err := GetConfigDir()
+	storePath, err := GetStorePath()
 	if err != nil {
 		return nil, "", errors.New("cant get path to the configuration path")
 	}
-
-	storePath := filepath.Join(configDir, "data.tanadb")
 
 	store := NewStore()
 	err = LoadFromFile(storePath, store)
 	if err != nil {
 		return nil, "", fmt.Errorf("failed to load store from file: %w", err)
 	}
-
 	return store, storePath, nil
 }
 

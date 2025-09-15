@@ -23,7 +23,7 @@ func loadContext() (*Store, string, error) {
 func saveStore(store *Store, path string) error {
 	err := SaveToFile(store, path)
 	if err != nil {
-		return fmt.Errorf("failed to save store to file: %w", err.Error())
+		return fmt.Errorf("failed to save store to file: %w", err)
 	}
 
 	return nil
